@@ -44,10 +44,20 @@ app.post('/index', async (req, res) => {
         console.error('External API responded with:', response.data);
 
         if (Math.floor(response.status / 200) === 1) {
-            const htmlPath = path.join(__dirname, 'index.html');
-            return res.sendFile(htmlPath);
+            console.log('Response body:', response.body);
+            // const htmlPath = path.join(__dirname, 'index.html');
+            // return res.sendFile(htmlPath);
+            return res.json({
+                success: 1,
+                response: response.data  // or whatever part of the response you want to include
+            });
         } else {
-            return res.status(response.status).send('External API did not return 200 OK.');
+            return res.status(response.status).json({
+                success: 0,
+                error: 'External API did not return 200 OK',
+                details: response.data
+            });
+            // return res.status(response.status).send('External API did not return 200 OK.');
         }
 
     } catch (error) {

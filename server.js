@@ -9,6 +9,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // POST route that sends an HTML file
 app.post('/index', async (req, res) => {
+    console.log('Body:', req.body);
+    console.log('Query:', req.query);
     const { brick_secure_token, brick_charge_id } = req.body;
     const { token, email, amount, currency } = parseCustomQueryItem(req.query.query)
     try {

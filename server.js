@@ -67,6 +67,66 @@ app.post('/index', async (req, res) => {
     }
 });
 
+
+// New endpoint for Google Pay token
+app.post('/google-pay', async (req, res) => {
+    console.log('Body:', req.body);
+    console.log('Query:', req.query);
+    const { google_pay_token, charge_id } = req.body;
+    const { token, email, amount, currency } = req.query;
+    
+    try {
+        const body = {
+            token: token,
+            email: email,
+            amount: amount,
+            currency: currency,
+            description: "test",
+            secure: "1",
+            secure_return_method: "url",
+            secure_token: google_pay_token,
+            charge_id: charge_id
+        };
+        
+        console.log(body);
+        const finalBody = Object.entries(body)
+            .map(([key, value]) => `${key}=${value}`)
+            .join('&');
+            
+        const response = await axios.post('https://api.paymentwall.com/api/brick/charge',
+            finalBody,
+            {
+                headers: {
+                    'x-apikey': '9d8884beeb76162785fc92639da37a33',
+                }
+            }
+        );
+
+        if (Math.floor(response.status / 200) === 1) {
+            return res.json({
+                success: 1,
+                response: response.data
+            });
+        } else {
+            return res.status(response.status).json({
+                success: 0,
+                error: 'External API did not return 200 OK',
+                details: response.data
+            });
+        }
+
+    } catch (error) {
+        console.log(error.response?.data || error.message);
+        console.error('Error calling external API:', error.message);
+        res.status(500).json({
+            success: 0,
+            error: 'Failed to contact external API',
+            details: error.response?.data || error.message
+        });
+    }
+});
+
+
 // GET route that sends an HTML file
 app.get('/index', (req, res) => {
     const htmlPath = path.join(__dirname, 'index.html');

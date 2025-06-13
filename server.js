@@ -72,7 +72,7 @@ app.post('/index', async (req, res) => {
 app.post('/google-pay', async (req, res) => {
     console.log('Body:', req.body);
     console.log('Query:', req.query);
-    const { google_pay_token, charge_id } = req.body;
+    const { gpay_token, charge_id } = req.body;
     const { token, email, amount, currency } = req.query;
     
     try {
@@ -84,7 +84,7 @@ app.post('/google-pay', async (req, res) => {
             description: "test",
             secure: "1",
             secure_return_method: "url",
-            secure_token: google_pay_token,
+            google_pay_token: gpay_token,
             charge_id: charge_id
         };
         

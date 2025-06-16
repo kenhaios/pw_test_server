@@ -47,10 +47,27 @@ app.post('/index', async (req, res) => {
             console.log('Response body:', response.body);
             // const htmlPath = path.join(__dirname, 'index.html');
             // return res.sendFile(htmlPath);
-            return res.json({
-                success: 1,
-                response: response.data  // or whatever part of the response you want to include
-            });
+            
+            const responseHtml = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>Response</title>
+        </head>
+        <body>
+            <script type="application/json" id="response-data">
+                ${JSON.stringify(response.data, null, 2)}
+            </script>
+        </body>
+        </html>
+    `;
+
+return res.send(responseHtml);
+            // return res.json({
+            //     success: 1,
+            //     response: response.data  // or whatever part of the response you want to include
+            // });
         } else {
             return res.status(response.status).json({
                 success: 0,

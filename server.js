@@ -56,9 +56,7 @@ app.post('/index', async (req, res) => {
             <title>Response</title>
         </head>
         <body>
-            <script type="application/json" id="response-data">
-                ${JSON.stringify(response.data, null, 2)}
-            </script>
+            ${JSON.stringify(response.data, null, 2)}
         </body>
         </html>
     `;

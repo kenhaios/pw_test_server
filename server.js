@@ -35,7 +35,7 @@ app.post('/index', async (req, res) => {
             finalBody,
             {
                 headers: {
-                    'x-apikey': '28b8049b4d7d8292a2cc4d37d7a0ea81',
+                    'x-apikey': '9d8884beeb76162785fc92639da37a33',
                 }
             }
         );
@@ -112,7 +112,7 @@ app.post('/google-pay', async (req, res) => {
             finalBody,
             {
                 headers: {
-                    'x-apikey': '28b8049b4d7d8292a2cc4d37d7a0ea81',
+                    'x-apikey': '9d8884beeb76162785fc92639da37a33',
                 }
             }
         );
